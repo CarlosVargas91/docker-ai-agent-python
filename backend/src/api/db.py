@@ -6,7 +6,7 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 
 if DATABASE_URL == "":
     raise NotImplementedError(f"You need a valid database URL. Current value: {DATABASE_URL}")
-else
+else:
     print(f"The DATABASE_URL is: {DATABASE_URL}")
 
 engine = sqlmodel.create_engine(DATABASE_URL)
