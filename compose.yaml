@@ -1,0 +1,42 @@
+services: # docker compose expects
+  backend: # Custom key name
+    # image: python:latest
+    build:
+      context: ./backend #This local folder
+      dockerfile: Dockerfile # Our docker file
+    ports:
+      - 8080:8000
+    # main:name of app in python file
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      - PORT=8000
+      # DO not add quotes ""
+      - MY_PROJECT=Hello World
+    env_file:
+      - .env.sample
+    volumes: # Attach local filesystem into the container
+      - ./backend/src:/app
+    develop:
+      watch:
+      # rebuild every time the requirements.txt file is changed
+        - action: rebuild
+          path: ./backend/requirements.txt
+        - action: rebuild
+          path: ./backend/Dockerfile
+        - action: restart
+          path: ./backend/src/
+        # - action: sync
+        #   path: ./backend/src/
+        #   target: /app
+
+  static_html: # Custom key name
+    # image: python:latest
+    build:
+      context: ./static_html #This local folder
+      dockerfile: static.Dockerfile # Our docker file
+    ports:
+      - 8000:8000
+      - 3000:8000
+    command: python -m http.server 8000 # This is rendering in port
+    volumes: # Attach local filesystem into the container
+      - ./static_html/src:/app
