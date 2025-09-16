@@ -1,7 +1,18 @@
 import os
-from fastapi import FastAPI
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+from fastapi import FastAPI
+from api.db import init_db
+
+# decorator of function. Gets a function and returns on modified
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # before app startup
+    init_db()
+    yield
+    # after app startup
+
+app = FastAPI(lifespan=lifespan)
 
 MY_PROJECT = os.getenv("MY_PROJECT")
 API_KEY = os.getenv("API_KEY")

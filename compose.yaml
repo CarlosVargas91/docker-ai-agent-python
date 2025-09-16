@@ -29,6 +29,19 @@ services: # docker compose expects
         #   path: ./backend/src/
         #   target: /app
 
+  # DATABASE_URL
+  db_service:
+    image: postgres:17.5
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD=db-password
+      - POSTGRES_DB=mydb
+    # environment:
+    #   - .env.sample-db
+    volumes:
+      - dc_managed_db_volume:/var/lib/postgresql/data
   static_html: # Custom key name
     # image: python:latest
     build:
@@ -40,3 +53,7 @@ services: # docker compose expects
     command: python -m http.server 8000 # This is rendering in port
     volumes: # Attach local filesystem into the container
       - ./static_html/src:/app
+
+# Keyword
+volumes:
+  dc_managed_db_volume:

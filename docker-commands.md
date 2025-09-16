@@ -26,3 +26,6 @@ docker compose run app /bin/bash
 
 # watch mode
 docker compose up --watch
+
+# To remove the volumes
+docker compose down -v
