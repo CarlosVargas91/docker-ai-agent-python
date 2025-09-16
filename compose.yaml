@@ -20,11 +20,11 @@ services: # docker compose expects
       watch:
       # rebuild every time the requirements.txt file is changed
         - action: rebuild
-          path: ./backend/requirements.txt
+          path: backend/requirements.txt
         - action: rebuild
-          path: ./backend/Dockerfile
+          path: backend/Dockerfile
         - action: restart
-          path: ./backend/src/
+          path: backend/src/
         # - action: sync
         #   path: ./backend/src/
         #   target: /app
