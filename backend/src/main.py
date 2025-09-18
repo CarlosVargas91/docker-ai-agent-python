@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from api.db import init_db
+from api.chat.routing import router as chat_router
 
 # decorator of function. Gets a function and returns on modified
 @asynccontextmanager
@@ -13,6 +14,7 @@ async def lifespan(app: FastAPI):
     # after app startup
 
 app = FastAPI(lifespan=lifespan)
+app.include_router(chat_router, prefix="/api/chats")
 
 MY_PROJECT = os.getenv("MY_PROJECT")
 API_KEY = os.getenv("API_KEY")

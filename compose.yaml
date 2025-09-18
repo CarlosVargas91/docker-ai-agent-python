@@ -16,6 +16,8 @@ services: # docker compose expects
       - .env.sample
     volumes: # Attach local filesystem into the container
       - ./backend/src:/app
+    depends_on:
+      - db_service
     develop:
       watch:
       # rebuild every time the requirements.txt file is changed
@@ -42,17 +44,17 @@ services: # docker compose expects
     #   - .env.sample-db
     volumes:
       - dc_managed_db_volume:/var/lib/postgresql/data
-  static_html: # Custom key name
-    # image: python:latest
-    build:
-      context: ./static_html #This local folder
-      dockerfile: static.Dockerfile # Our docker file
-    ports:
-      - 8000:8000
-      - 3000:8000
-    command: python -m http.server 8000 # This is rendering in port
-    volumes: # Attach local filesystem into the container
-      - ./static_html/src:/app
+  # static_html: # Custom key name
+  #   # image: python:latest
+  #   build:
+  #     context: ./static_html #This local folder
+  #     dockerfile: static.Dockerfile # Our docker file
+  #   ports:
+  #     - 8000:8000
+  #     - 3000:8000
+  #   command: python -m http.server 8000 # This is rendering in port
+  #   volumes: # Attach local filesystem into the container
+  #     - ./static_html/src:/app
 
 # Keyword
 volumes:
