@@ -4,3 +4,5 @@ uvicorn[standard]
 requests
 sqlmodel
 psycopg[binary] # postgres with python
+langchain
+langchain-openai

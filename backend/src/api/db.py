@@ -9,6 +9,8 @@ if DATABASE_URL == "":
 else:
     print(f"The DATABASE_URL is: {DATABASE_URL}")
 
+DATABASE_URL = DATABASE_URL.replace("postgres://", "postgres+psycopg://")
+
 engine = sqlmodel.create_engine(DATABASE_URL)
 
 #database models
